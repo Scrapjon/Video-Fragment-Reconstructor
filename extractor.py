@@ -5,6 +5,9 @@ import pandas as pd
 import subprocess
 import csv
 
+fps = 0
+resolution = (0,0)
+
 
 def main():
     # clear out output stuff
@@ -55,11 +58,22 @@ def save_features_streaming(frames_with_info, hist_size, edge_size, output_file)
     print(f"Features saved to {output_file}")
 
 def extract():
+    global fps, resolution
+
     video_path = 'input_videos/input.mp4'
     output_dir = 'output_frames'
     os.makedirs(output_dir, exist_ok=True)
 
     cap = cv2.VideoCapture(video_path)
+
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    print(f"FPS: {fps}")
+
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    resolution = (width,height)
+    print(f"Resolution: {width}x{height}")
+
     extract_audio(video_path, 'output_data/audio.mp3')
     frames = []
     frame_count = 0
