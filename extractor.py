@@ -23,6 +23,7 @@ def main():
     os.makedirs('output_slices', exist_ok=True)
     os.makedirs('output_frames', exist_ok=True)
     os.makedirs('output_data', exist_ok=True)
+    os.makedirs('model', exist_ok=True)
 
     # clear out output stuff
     dir_name = 'output_frames'
