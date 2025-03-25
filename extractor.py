@@ -10,6 +10,20 @@ resolution = (0,0)
 
 
 def main():
+
+    # make folders
+    no_input_folder = not os.path.exists('input_videos')
+    os.makedirs('input_videos', exist_ok=True)
+    if no_input_folder:
+        print("input_videos folder created, please add input video titled 'input.mp4' before running again.")
+        return
+    if not os.path.exists('input_videos'):
+        print("please add mp4 input to input_videos folder titled 'input.mp4'")
+        return
+    os.makedirs('output_slices', exist_ok=True)
+    os.makedirs('output_frames', exist_ok=True)
+    os.makedirs('output_data', exist_ok=True)
+
     # clear out output stuff
     dir_name = 'output_frames'
     if os.path.exists(dir_name):
@@ -45,6 +59,8 @@ def save_features_streaming(frames_with_info, hist_size, edge_size, output_file)
 
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
+    
+
     with open(output_file, mode='w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(column_names)  # Write header
@@ -62,7 +78,6 @@ def extract():
 
     video_path = 'input_videos/input.mp4'
     output_dir = 'output_frames'
-    os.makedirs(output_dir, exist_ok=True)
 
     cap = cv2.VideoCapture(video_path)
 
