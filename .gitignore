@@ -163,3 +163,4 @@ output_data/
 output_frames/
 input_videos/
 output_slices/
+model/

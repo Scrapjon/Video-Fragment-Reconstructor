@@ -9,7 +9,10 @@ fps = 0
 resolution = (0,0)
 
 
-def main():
+
+def main(input:str = 'input_videos/input.mp4'):
+
+    
 
     # make folders
     no_input_folder = not os.path.exists('input_videos')
@@ -36,8 +39,8 @@ def main():
             except Exception as e:
                 print(f"Failed to delete {file_path}. Reason: {e}.")
 
-
-    frames_with_info = extract()
+    print(f"Taking input {input}")
+    frames_with_info = extract(input)
     features = []
     for frame, timestamp, frame_filename in frames_with_info:
         hist = extract_colour_histogram(frame=frame)
@@ -51,6 +54,7 @@ def main():
     print("Writing data to csv")
     save_features_streaming(frames_with_info=frames_with_info, hist_size=hist_size, edge_size=edge_size, output_file='output_data/output_features.csv')
     print("Extraction completed!")
+    return fps, resolution
     
     
 def save_features_streaming(frames_with_info, hist_size, edge_size, output_file):
@@ -74,10 +78,10 @@ def save_features_streaming(frames_with_info, hist_size, edge_size, output_file)
 
     print(f"Features saved to {output_file}")
 
-def extract():
+def extract(input):
     global fps, resolution
 
-    video_path = 'input_videos/input.mp4'
+    video_path = input
     output_dir = 'output_frames'
 
     cap = cv2.VideoCapture(video_path)
@@ -133,6 +137,9 @@ def save_features_to_csv(features, hist_size, edge_size, output_file):
     df = pd.DataFrame(features, columns=column_names)
     df.to_csv(output_file, index=False)
     print(f"Saved combined features to {output_file}")
+
+def run(input:str):
+    return main(input=input)
 
 if __name__ == '__main__':
     main()
