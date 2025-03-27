@@ -136,8 +136,7 @@ def save_features_to_csv(features, hist_size, edge_size, output_file):
 
     df = pd.DataFrame(features, columns=column_names)
     df.to_csv(output_file, index=False)
-    print(f"Saved combined features to {output_file}")
-
+    print(f"Saved combined features to {output_file}") 
 def run(input:str):
     return main(input=input)
 
